@@ -1,5 +1,7 @@
-import { ChakraProvider } from "@chakra-ui/react";
-import { DefaultSeo } from "next-seo";
+import {ChakraProvider} from "@chakra-ui/react";
+import {DefaultSeo} from "next-seo";
+import TagManager from 'react-gtm-module';
+import {useEffect} from "react";
 
 import theme from "@/theme/index";
 import Layout from "@/layouts/global";
@@ -11,16 +13,22 @@ import "@fontsource/poppins/latin-600.css";
 import "@fontsource/poppins/latin-700.css";
 import "@/styles/index.css";
 
-const MyApp = ({ Component, pageProps }) => (
-  <>
-    <DefaultSeo {...SEO} />
+const MyApp = ({Component, pageProps}) => {
+    useEffect(() => {
+        TagManager.initialize({gtmId: 'GTM-N7SL9B4'});
+    }, []);
 
-    <ChakraProvider theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ChakraProvider>
-  </>
-);
+    return (
+        <>
+            <DefaultSeo {...SEO} />
+
+            <ChakraProvider theme={theme}>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </ChakraProvider>
+        </>
+    )
+};
 
 export default MyApp;
